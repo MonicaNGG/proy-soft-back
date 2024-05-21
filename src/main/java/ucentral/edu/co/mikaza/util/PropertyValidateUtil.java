@@ -1,6 +1,8 @@
 package ucentral.edu.co.mikaza.util;
 
 public class PropertyValidateUtil {
+
+    private PropertyValidateUtil(){};
     public static final String PROPERTY_NOT_FOUND = "Propiedad no encontrada";
     public static final String PROPERTY_DELETED = "Propiedad con id %s eliminada correctamente";
 

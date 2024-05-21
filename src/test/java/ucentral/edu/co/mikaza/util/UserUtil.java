@@ -6,9 +6,6 @@ import ucentral.edu.co.mikaza.dto.user.UserInformationDto;
 import ucentral.edu.co.mikaza.model.User;
 
 public class UserUtil {
-
-    private UserUtil(){};
-
     public static String NAME = "John";
     public static String NAME_NOT_NULL = "Nombre no puede ser nulo";
     public static String LAST_NAME = "Doe";

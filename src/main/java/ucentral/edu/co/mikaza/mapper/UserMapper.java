@@ -4,6 +4,8 @@ import ucentral.edu.co.mikaza.dto.user.UserDto;
 import ucentral.edu.co.mikaza.model.User;
 
 public class UserMapper {
+
+    private UserMapper(){};
     public static UserDto modelToDto(User user) {
         return UserDto.builder()
                 .name(user.getName())
