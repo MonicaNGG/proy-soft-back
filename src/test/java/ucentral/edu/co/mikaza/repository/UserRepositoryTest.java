@@ -44,7 +44,7 @@ import static org.mockito.BDDMockito.given;
         given(userRepository.existsByEmail(UserUtil.EMAIL)).willReturn(true);
         boolean exists = userRepository.existsByEmail(UserUtil.EMAIL);
 
-        assertEquals(exists, true );
+        assertEquals(true,exists );
     }
 
     @Test
@@ -52,6 +52,6 @@ import static org.mockito.BDDMockito.given;
         given(userRepository.existsByDocumentNumber(UserUtil.DOCUMENT_NUMBER)).willReturn(true);
         boolean exists = userRepository.existsByDocumentNumber(UserUtil.DOCUMENT_NUMBER);
 
-        assertEquals(exists, true);
+        assertEquals(true,exists);
     }
 }

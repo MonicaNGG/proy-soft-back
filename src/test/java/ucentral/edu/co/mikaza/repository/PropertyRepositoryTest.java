@@ -39,7 +39,7 @@ import static org.mockito.BDDMockito.given;
 
         boolean exists = propertyRepository.existsById(PropertyUtil.ID_ONE);
 
-        assertEquals(exists, true);
+        assertEquals(true,exists);
     }
 
     @Test
