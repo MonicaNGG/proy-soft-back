@@ -27,6 +27,7 @@ public class PropertyController {
 
     @GetMapping(path = "/getAllProperties")
     public ResponseEntity<List<GetPropertyDto>> getAllProperties(
+            
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String zone,
             @RequestParam(required = false) Integer price,
