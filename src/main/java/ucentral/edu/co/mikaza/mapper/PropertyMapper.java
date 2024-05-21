@@ -8,6 +8,8 @@ import ucentral.edu.co.mikaza.model.Property;
 import java.util.List;
 
 public class PropertyMapper {
+
+    private PropertyMapper(){};
     public static GetPropertyDto modelToGetPropertyDto(Property property) {
         return GetPropertyDto.builder()
                 .city(property.getCity())

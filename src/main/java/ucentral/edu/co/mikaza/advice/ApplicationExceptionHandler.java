@@ -13,6 +13,9 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ApplicationExceptionHandler {
+
+    private static String ERROR = "error";
+
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleInvalidArgument(MethodArgumentNotValidException ex) {
@@ -30,7 +33,7 @@ public class ApplicationExceptionHandler {
     public Map<String, String> handleUserException(UserException ex) {
         Map<String, String> errors = new HashMap<>();
 
-        errors.put("error", ex.getMessage());
+        errors.put(ERROR, ex.getMessage());
 
         return errors;
     }
@@ -40,7 +43,7 @@ public class ApplicationExceptionHandler {
     public Map<String, String> handlePropertyException(PropertyException ex) {
         Map<String, String> errors = new HashMap<>();
 
-        errors.put("error", ex.getMessage());
+        errors.put(ERROR, ex.getMessage());
 
         return errors;
     }
@@ -50,7 +53,7 @@ public class ApplicationExceptionHandler {
     public Map<String, String> handleAnyException(Exception ex) {
         Map<String, String> errors = new HashMap<>();
 
-        errors.put("error", ex.getMessage());
+        errors.put(ERROR, ex.getMessage());
 
         return errors;
     }

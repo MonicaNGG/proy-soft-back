@@ -1,5 +1,4 @@
 ucentral/edu/co/mikaza/MikazaApplicationTests.class
-ucentral/edu/co/mikaza/util/UserUtilTest.class
 ucentral/edu/co/mikaza/util/PropertyUtil.class
 ucentral/edu/co/mikaza/controller/UserControllerTest.class
 ucentral/edu/co/mikaza/util/UserUtil.class
@@ -8,4 +7,3 @@ ucentral/edu/co/mikaza/repository/PropertyRepositoryTest.class
 ucentral/edu/co/mikaza/repository/UserRepositoryTest.class
 ucentral/edu/co/mikaza/service/PropertyServiceImplTest.class
 ucentral/edu/co/mikaza/controller/PropertyControllerTest.class
-ucentral/edu/co/mikaza/util/PropertyUtilTest.class

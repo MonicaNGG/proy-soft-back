@@ -10,9 +10,6 @@ import java.util.Date;
 import java.util.List;
 
 public class PropertyUtil {
-
-    private PropertyUtil(){};
-
     public static Long ID_ONE = 1L;
     public static Long ID_TWO = 1L;
     public static String CITY = "Bogotá";

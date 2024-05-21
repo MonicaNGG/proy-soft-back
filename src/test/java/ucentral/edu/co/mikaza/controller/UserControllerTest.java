@@ -9,23 +9,21 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.ModelAndView;
-import ucentral.edu.co.mikaza.controller.UserController;
 import ucentral.edu.co.mikaza.dto.user.UserDto;
 import ucentral.edu.co.mikaza.dto.user.UserInformationDto;
 import ucentral.edu.co.mikaza.exception.UserException;
 import ucentral.edu.co.mikaza.service.UserService;
-import ucentral.edu.co.mikaza.util.UserUtilTest;
+import ucentral.edu.co.mikaza.util.UserUtil;
 
 import java.io.UnsupportedEncodingException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class UserControllerTest {
+ class UserControllerTest {
     @Autowired
     private UserController userController;
 
@@ -36,82 +34,82 @@ public class UserControllerTest {
     private HttpServletRequest request;
 
     @Test
-    public void createUserTestOk() throws MessagingException, UnsupportedEncodingException, UserException {
-        when(userService.createUser(UserUtilTest.USER_DTO, request)).thenReturn(UserUtilTest.USER_DTO);
+     void createUserTestOk() throws MessagingException, UnsupportedEncodingException, UserException {
+        when(userService.createUser(UserUtil.USER_DTO, request)).thenReturn(UserUtil.USER_DTO);
 
-        ResponseEntity<UserDto> response = userController.createUser(UserUtilTest.USER_DTO, request);
+        ResponseEntity<UserDto> response = userController.createUser(UserUtil.USER_DTO, request);
 
-        verify(userService).createUser(eq(UserUtilTest.USER_DTO), eq(request));
+        verify(userService).createUser(UserUtil.USER_DTO, request);
 
         assertEquals(HttpStatus.CREATED.value(), response.getStatusCode().value());
     }
 
     @Test
-    public void createUserTestNotOk() throws MessagingException, UnsupportedEncodingException {
+     void createUserTestNotOk() throws MessagingException, UnsupportedEncodingException {
         try {
-            ResponseEntity<UserDto> response = userController.createUser(UserUtilTest.USER_DTO_INCORRECT, request);
+            userController.createUser(UserUtil.USER_DTO_INCORRECT, request);
         } catch (UserException ex) {
-            assertEquals(UserUtilTest.NAME_NOT_NULL, ex.getMessage());
+            assertEquals(UserUtil.NAME_NOT_NULL, ex.getMessage());
         }
     }
 
     @Test
-    public void verifyUserTestOk() throws UserException {
-        when(userService.verifyUser(UserUtilTest.VERIFICATION_CODE)).thenReturn(UserUtilTest.EMAIL_VERIFIED_TEMPLATE);
+     void verifyUserTestOk() throws UserException {
+        when(userService.verifyUser(UserUtil.VERIFICATION_CODE)).thenReturn(UserUtil.EMAIL_VERIFIED_TEMPLATE);
 
-        ModelAndView response = userController.verifyUser(UserUtilTest.VERIFICATION_CODE);
+        ModelAndView response = userController.verifyUser(UserUtil.VERIFICATION_CODE);
 
-        verify(userService).verifyUser(eq(UserUtilTest.VERIFICATION_CODE));
+        verify(userService).verifyUser(UserUtil.VERIFICATION_CODE);
 
         assertNotNull(response);
     }
 
     @Test
-    public void verifyUserTestNotOk() {
+     void verifyUserTestNotOk() {
         try {
-            ModelAndView response = userController.verifyUser(UserUtilTest.VERIFICATION_CODE);
+            userController.verifyUser(UserUtil.VERIFICATION_CODE);
         } catch (UserException ex) {
-            assertEquals(UserUtilTest.EMAIL_NOT_FOUND, ex.getMessage());
+            assertEquals(UserUtil.EMAIL_NOT_FOUND, ex.getMessage());
         }
     }
 
     @Test
-    public void getUserTestOk() throws UserException {
-        when(userService.getUser(UserUtilTest.EMAIL)).thenReturn(UserUtilTest.USER_INFORMATION_DTO);
+     void getUserTestOk() throws UserException {
+        when(userService.getUser(UserUtil.EMAIL)).thenReturn(UserUtil.USER_INFORMATION_DTO);
 
-        ResponseEntity<UserInformationDto> response = userController.getUser(UserUtilTest.EMAIL);
+        ResponseEntity<UserInformationDto> response = userController.getUser(UserUtil.EMAIL);
 
-        verify(userService).getUser(eq(UserUtilTest.EMAIL));
+        verify(userService).getUser(UserUtil.EMAIL);
 
         assertEquals(HttpStatus.OK.value(), response.getStatusCode().value());
     }
 
     @Test
-    public void getUserTestNotOk() {
+     void getUserTestNotOk() {
         try {
-            ResponseEntity<UserInformationDto> response = userController.getUser(UserUtilTest.EMAIL);
+            userController.getUser(UserUtil.EMAIL);
         } catch (UserException ex) {
-            assertEquals(UserUtilTest.EMAIL_NOT_FOUND, ex.getMessage());
+            assertEquals(UserUtil.EMAIL_NOT_FOUND, ex.getMessage());
         }
     }
 
     @Test
-    public void loginUserTestOk() throws UserException {
-        when(userService.loginUser(UserUtilTest.LOGIN_DTO)).thenReturn(UserUtilTest.USER_DTO);
+     void loginUserTestOk() throws UserException {
+        when(userService.loginUser(UserUtil.LOGIN_DTO)).thenReturn(UserUtil.USER_DTO);
 
-        ResponseEntity<UserDto> response = userController.loginUser(UserUtilTest.LOGIN_DTO);
+        ResponseEntity<UserDto> response = userController.loginUser(UserUtil.LOGIN_DTO);
 
-        verify(userService).loginUser(eq(UserUtilTest.LOGIN_DTO));
+        verify(userService).loginUser(UserUtil.LOGIN_DTO);
 
         assertEquals(HttpStatus.OK.value(), response.getStatusCode().value());
     }
 
     @Test
-    public void loginUserTestNotOk() {
+     void loginUserTestNotOk() {
         try {
-            ResponseEntity<UserDto> response = userController.loginUser(UserUtilTest.LOGIN_DTO_INCORRECT);
+            userController.loginUser(UserUtil.LOGIN_DTO_INCORRECT);
         } catch (UserException ex) {
-            assertEquals(UserUtilTest.PASSWORD_INCORRECT, ex.getMessage());
+            assertEquals(UserUtil.PASSWORD_INCORRECT, ex.getMessage());
         }
     }
 }

@@ -36,7 +36,7 @@ public class PropertyController {
             @RequestParam(required = false) String accommodationType,
             @RequestParam(required = false) String additionalServices
     ) {
-        return new ResponseEntity(propertyService.getAllProperties(
+        return new ResponseEntity<>(propertyService.getAllProperties(
                 city,
                 zone,
                 price,
@@ -50,21 +50,21 @@ public class PropertyController {
 
     @GetMapping(path = "/getPropertyById/{id}")
     public ResponseEntity<GetPropertyDto> getPropertyById(@PathVariable Long id) throws PropertyException {
-        return new ResponseEntity(propertyService.getPropertyById(id), HttpStatus.OK);
+        return new ResponseEntity<>(propertyService.getPropertyById(id), HttpStatus.OK);
     }
 
     @PostMapping(path = "/saveProperty",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GetPropertyDto> saveProperty(@Valid @RequestBody CreatePropertyDto createPropertyDto) {
-        return new ResponseEntity(propertyService.saveProperty(createPropertyDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(propertyService.saveProperty(createPropertyDto), HttpStatus.CREATED);
     }
 
     @PutMapping(path = "/updateProperty",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<GetPropertyDto> updateProperty(@Valid @RequestBody UpdatePropertyDto updatePropertyDto) throws PropertyException {
-        return new ResponseEntity(propertyService.updateProperty(updatePropertyDto), HttpStatus.OK);
+        return new ResponseEntity<>(propertyService.updateProperty(updatePropertyDto), HttpStatus.OK);
     }
 
     @DeleteMapping(path = "/deleteProperty/{id}")
