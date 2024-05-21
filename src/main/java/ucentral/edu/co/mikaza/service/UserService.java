@@ -11,7 +11,7 @@ import java.io.UnsupportedEncodingException;
 
 public interface UserService {
     UserDto createUser(UserDto userDto, HttpServletRequest request) throws UserException, MessagingException, UnsupportedEncodingException;
-    String verifyUser(String verificationCode);
+    String verifyUser(String verificationCode) throws UserException;
     UserInformationDto getUser(String email) throws UserException;
     UserDto loginUser(LoginDto loginDto) throws UserException;
 }

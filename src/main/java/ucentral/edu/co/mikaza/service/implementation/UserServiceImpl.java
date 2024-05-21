@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public String verifyUser(String verificationCode) {
+    public String verifyUser(String verificationCode) throws UserException{
         User user = userRepository.findByVerificationCode(verificationCode);
 
         if (user != null && !user.isEnabled()) {
