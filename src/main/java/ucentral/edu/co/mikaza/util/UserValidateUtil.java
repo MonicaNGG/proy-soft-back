@@ -1,6 +1,8 @@
 package ucentral.edu.co.mikaza.util;
 
 public class UserValidateUtil {
+
+    private UserValidateUtil(){};
     public static final String NAME_NOT_NULL = "Nombre no puede ser nulo";
     public static final String NAME_NOT_EMPTY = "Nombre no puede ser vacío";
     public static final String NAME_NOT_BLANK = "Nombre no puede estar en blanco";

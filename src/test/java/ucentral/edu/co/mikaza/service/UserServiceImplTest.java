@@ -1,6 +1,5 @@
 package ucentral.edu.co.mikaza.service;
 
-import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -12,16 +11,14 @@ import ucentral.edu.co.mikaza.dto.user.UserInformationDto;
 import ucentral.edu.co.mikaza.exception.UserException;
 import ucentral.edu.co.mikaza.repository.UserRepository;
 import ucentral.edu.co.mikaza.service.implementation.UserServiceImpl;
-import ucentral.edu.co.mikaza.util.UserUtilTest;
+import ucentral.edu.co.mikaza.util.UserUtil;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.UnsupportedEncodingException;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.given;
 
 @SpringBootTest
-public class UserServiceImplTest {
+ class UserServiceImplTest {
     @InjectMocks
     private UserServiceImpl userServiceImpl;
 
@@ -31,103 +28,91 @@ public class UserServiceImplTest {
     @Autowired
     private HttpServletRequest request;
 
-    //@Test
-   // public void createUserTestOk() throws MessagingException, UnsupportedEncodingException, UserException {
-     //   given(userRepository.existsByEmail(UserUtilTest.USER_DTO.getEmail())).willReturn(false);
-      //  given(userRepository.existsByDocumentNumber(UserUtilTest.USER_DTO.getDocumentNumber())).willReturn(false);
-    //    given(userRepository.save(UserUtilTest.USER_MODEL)).willReturn(UserUtilTest.USER_MODEL);
-
-      //  UserDto userDtoSaved = userServiceImpl.createUser(UserUtilTest.USER_DTO, request);
-
-      //  assertEquals(UserUtilTest.EMAIL, userDtoSaved.getEmail());
-    //    assertEquals(UserUtilTest.DOCUMENT_NUMBER, userDtoSaved.getDocumentNumber());
-    //}
-
     @Test
-    public void createUserTestNotOkOne() {
-        given(userRepository.existsByEmail(UserUtilTest.USER_DTO.getEmail())).willReturn(true);
+     void createUserTestNotOkOne() {
+        given(userRepository.existsByEmail(UserUtil.USER_DTO.getEmail())).willReturn(true);
 
-        assertEquals(UserUtilTest.EMAIL_UNIQUE, assertThrows(UserException.class, () -> userServiceImpl.createUser(UserUtilTest.USER_DTO, request)).getMessage());
-        assertThrows(UserException.class, () -> userServiceImpl.createUser(UserUtilTest.USER_DTO, request));
+        assertEquals(UserUtil.EMAIL_UNIQUE, assertThrows(UserException.class, () -> userServiceImpl.createUser(UserUtil.USER_DTO, request)).getMessage());
+        assertThrows(UserException.class, () -> userServiceImpl.createUser(UserUtil.USER_DTO, request));
     }
 
     @Test
-    public void createUserTestNotOkTwo() {
-        given(userRepository.existsByDocumentNumber(UserUtilTest.USER_DTO.getDocumentNumber())).willReturn(true);
+     void createUserTestNotOkTwo() {
+        given(userRepository.existsByDocumentNumber(UserUtil.USER_DTO.getDocumentNumber())).willReturn(true);
 
-        assertEquals(UserUtilTest.DOCUMENT_NUMBER_UNIQUE, assertThrows(UserException.class, () -> userServiceImpl.createUser(UserUtilTest.USER_DTO, request)).getMessage());
-        assertThrows(UserException.class, () -> userServiceImpl.createUser(UserUtilTest.USER_DTO, request));
+        assertEquals(UserUtil.DOCUMENT_NUMBER_UNIQUE, assertThrows(UserException.class, () -> userServiceImpl.createUser(UserUtil.USER_DTO, request)).getMessage());
+        assertThrows(UserException.class, () -> userServiceImpl.createUser(UserUtil.USER_DTO, request));
     }
 
     @Test
-    public void verifyUserTestOk() {
-        given(userRepository.findByVerificationCode(UserUtilTest.VERIFICATION_CODE)).willReturn(UserUtilTest.USER_MODEL);
+     void verifyUserTestOk() {
+        given(userRepository.findByVerificationCode(UserUtil.VERIFICATION_CODE)).willReturn(UserUtil.USER_MODEL);
 
-        String userVerified = userServiceImpl.verifyUser(UserUtilTest.VERIFICATION_CODE);
+        String userVerified = userServiceImpl.verifyUser(UserUtil.VERIFICATION_CODE);
 
-        assertEquals(UserUtilTest.EMAIL_VERIFIED_TEMPLATE, userVerified);
+        assertEquals(UserUtil.EMAIL_VERIFIED_TEMPLATE, userVerified);
     }
 
     @Test
-    public void verifyUserTestNotOk() {
-        given(userRepository.findByVerificationCode(UserUtilTest.VERIFICATION_CODE)).willReturn(null);
+     void verifyUserTestNotOk() {
+        given(userRepository.findByVerificationCode(UserUtil.VERIFICATION_CODE)).willReturn(null);
 
-        String userVerified = userServiceImpl.verifyUser(UserUtilTest.VERIFICATION_CODE);
+        String userVerified = userServiceImpl.verifyUser(UserUtil.VERIFICATION_CODE);
 
-        assertEquals(UserUtilTest.EMAIL_NOT_VERIFIED_TEMPLATE, userVerified);
+        assertEquals(UserUtil.EMAIL_NOT_VERIFIED_TEMPLATE, userVerified);
     }
 
     @Test
-    public void getUserTestOk() throws UserException {
-        given(userRepository.existsByEmail(UserUtilTest.EMAIL)).willReturn(true);
-        given(userRepository.findByEmail(UserUtilTest.EMAIL)).willReturn(UserUtilTest.USER_MODEL);
+     void getUserTestOk() throws UserException {
+        given(userRepository.existsByEmail(UserUtil.EMAIL)).willReturn(true);
+        given(userRepository.findByEmail(UserUtil.EMAIL)).willReturn(UserUtil.USER_MODEL);
 
-        UserInformationDto userInformationDto = userServiceImpl.getUser(UserUtilTest.EMAIL);
+        UserInformationDto userInformationDto = userServiceImpl.getUser(UserUtil.EMAIL);
 
-        assertEquals(UserUtilTest.EMAIL, userInformationDto.getEmail());
+        assertEquals(UserUtil.EMAIL, userInformationDto.getEmail());
     }
 
     @Test
-    public void getUserTestNotOk() {
-        given(userRepository.existsByEmail(UserUtilTest.EMAIL)).willReturn(false);
+     void getUserTestNotOk() {
+        given(userRepository.existsByEmail(UserUtil.EMAIL)).willReturn(false);
 
-        assertEquals(UserUtilTest.EMAIL_NOT_FOUND, assertThrows(UserException.class, () -> userServiceImpl.getUser(UserUtilTest.EMAIL)).getMessage());
-        assertThrows(UserException.class, () -> userServiceImpl.getUser(UserUtilTest.EMAIL));
+        assertEquals(UserUtil.EMAIL_NOT_FOUND, assertThrows(UserException.class, () -> userServiceImpl.getUser(UserUtil.EMAIL)).getMessage());
+        assertThrows(UserException.class, () -> userServiceImpl.getUser(UserUtil.EMAIL));
     }
 
     @Test
-    public void loginUserTestOk() throws UserException {
-        given(userRepository.existsByEmail(UserUtilTest.EMAIL)).willReturn(true);
-        given(userRepository.findByEmail(UserUtilTest.EMAIL)).willReturn(UserUtilTest.USER_MODEL_ENABLED);
+     void loginUserTestOk() throws UserException {
+        given(userRepository.existsByEmail(UserUtil.EMAIL)).willReturn(true);
+        given(userRepository.findByEmail(UserUtil.EMAIL)).willReturn(UserUtil.USER_MODEL_ENABLED);
 
-        UserDto userDtoSaved = userServiceImpl.loginUser(UserUtilTest.LOGIN_DTO);
+        UserDto userDtoSaved = userServiceImpl.loginUser(UserUtil.LOGIN_DTO);
 
-        assertEquals(UserUtilTest.EMAIL, userDtoSaved.getEmail());
+        assertEquals(UserUtil.EMAIL, userDtoSaved.getEmail());
     }
 
     @Test
-    public void loginUserTestNotOkOne() {
-        given(userRepository.existsByEmail(UserUtilTest.EMAIL)).willReturn(false);
+     void loginUserTestNotOkOne() {
+        given(userRepository.existsByEmail(UserUtil.EMAIL)).willReturn(false);
 
-        assertEquals(UserUtilTest.EMAIL_NOT_FOUND, assertThrows(UserException.class, () -> userServiceImpl.loginUser(UserUtilTest.LOGIN_DTO)).getMessage());
-        assertThrows(UserException.class, () -> userServiceImpl.loginUser(UserUtilTest.LOGIN_DTO));
+        assertEquals(UserUtil.EMAIL_NOT_FOUND, assertThrows(UserException.class, () -> userServiceImpl.loginUser(UserUtil.LOGIN_DTO)).getMessage());
+        assertThrows(UserException.class, () -> userServiceImpl.loginUser(UserUtil.LOGIN_DTO));
     }
 
     @Test
-    public void loginUserTestNotOkTwo() {
-        given(userRepository.existsByEmail(UserUtilTest.EMAIL)).willReturn(true);
-        given(userRepository.findByEmail(UserUtilTest.EMAIL)).willReturn(UserUtilTest.USER_MODEL_NOT_ENABLED);
+     void loginUserTestNotOkTwo() {
+        given(userRepository.existsByEmail(UserUtil.EMAIL)).willReturn(true);
+        given(userRepository.findByEmail(UserUtil.EMAIL)).willReturn(UserUtil.USER_MODEL_NOT_ENABLED);
 
-        assertEquals(UserUtilTest.EMAIL_NOT_VERIFIED, assertThrows(UserException.class, () -> userServiceImpl.loginUser(UserUtilTest.LOGIN_DTO)).getMessage());
-        assertThrows(UserException.class, () -> userServiceImpl.loginUser(UserUtilTest.LOGIN_DTO));
+        assertEquals(UserUtil.EMAIL_NOT_VERIFIED, assertThrows(UserException.class, () -> userServiceImpl.loginUser(UserUtil.LOGIN_DTO)).getMessage());
+        assertThrows(UserException.class, () -> userServiceImpl.loginUser(UserUtil.LOGIN_DTO));
     }
 
     @Test
-    public void loginUserTestNotOkThree() {
-        given(userRepository.existsByEmail(UserUtilTest.EMAIL)).willReturn(true);
-        given(userRepository.findByEmail(UserUtilTest.EMAIL)).willReturn(UserUtilTest.USER_MODEL_ENABLED);
+     void loginUserTestNotOkThree() {
+        given(userRepository.existsByEmail(UserUtil.EMAIL)).willReturn(true);
+        given(userRepository.findByEmail(UserUtil.EMAIL)).willReturn(UserUtil.USER_MODEL_ENABLED);
 
-        assertEquals(UserUtilTest.PASSWORD_INCORRECT, assertThrows(UserException.class, () -> userServiceImpl.loginUser(UserUtilTest.LOGIN_DTO_INCORRECT)).getMessage());
-        assertThrows(UserException.class, () -> userServiceImpl.loginUser(UserUtilTest.LOGIN_DTO_INCORRECT));
+        assertEquals(UserUtil.PASSWORD_INCORRECT, assertThrows(UserException.class, () -> userServiceImpl.loginUser(UserUtil.LOGIN_DTO_INCORRECT)).getMessage());
+        assertThrows(UserException.class, () -> userServiceImpl.loginUser(UserUtil.LOGIN_DTO_INCORRECT));
     }
 }
