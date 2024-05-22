@@ -45,7 +45,7 @@ import static org.mockito.BDDMockito.given;
     }
 
     @Test
-     void verifyUserTestOk() {
+     void verifyUserTestOk() throws UserException {
         given(userRepository.findByVerificationCode(UserUtil.VERIFICATION_CODE)).willReturn(UserUtil.USER_MODEL);
 
         String userVerified = userServiceImpl.verifyUser(UserUtil.VERIFICATION_CODE);
@@ -54,7 +54,7 @@ import static org.mockito.BDDMockito.given;
     }
 
     @Test
-     void verifyUserTestNotOk() {
+     void verifyUserTestNotOk() throws UserException {
         given(userRepository.findByVerificationCode(UserUtil.VERIFICATION_CODE)).willReturn(null);
 
         String userVerified = userServiceImpl.verifyUser(UserUtil.VERIFICATION_CODE);
