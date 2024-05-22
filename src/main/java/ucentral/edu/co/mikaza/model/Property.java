@@ -1,6 +1,5 @@
 package ucentral.edu.co.mikaza.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -27,11 +26,11 @@ public class Property {
     private Integer price;
 
     @Column(name = "entry_date")
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     private Date entryDate;
 
     @Column(name = "exit_date")
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
     private Date exitDate;
 
     @Column(name = "number_people")

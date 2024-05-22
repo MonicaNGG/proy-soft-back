@@ -3,6 +3,7 @@ package ucentral.edu.co.mikaza.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,12 +28,12 @@ public class PropertyController {
 
     @GetMapping(path = "/getAllProperties")
     public ResponseEntity<List<GetPropertyDto>> getAllProperties(
-            
+
             @RequestParam(required = false) String city,
             @RequestParam(required = false) String zone,
             @RequestParam(required = false) Integer price,
-            @RequestParam(required = false) Date entryDate,
-            @RequestParam(required = false) Date exitDate,
+            @RequestParam(required = false, name="entryDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date entryDate,
+            @RequestParam(required = false, name = "exitDate") @DateTimeFormat(pattern = "yyyy-MM-dd")  Date exitDate,
             @RequestParam(required = false) Short numberPeople,
             @RequestParam(required = false) String accommodationType,
             @RequestParam(required = false) String additionalServices
