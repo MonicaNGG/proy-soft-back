@@ -25,6 +25,10 @@ public class Property {
 
     private Integer price;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @Column(name = "entry_date")
     @Temporal(TemporalType.DATE)
     private Date entryDate;
@@ -42,5 +46,12 @@ public class Property {
     @Column(name = "additional_services")
     private String additionalServices;
 
+    @Column(name = "is_owner")
+    private boolean isOwner;
+
     private String image;
+
+    public void setIsOwner(boolean isOwner) {
+        this.isOwner = isOwner;
+    }
 }

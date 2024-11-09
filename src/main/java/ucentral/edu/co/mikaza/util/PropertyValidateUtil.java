@@ -2,6 +2,7 @@ package ucentral.edu.co.mikaza.util;
 
 public class PropertyValidateUtil {
 
+    public static final String USER_ID_NOT_NULL = "El ID del usuario es obligatorio.";
 
     public static final String PROPERTY_NOT_FOUND = "Propiedad no encontrada";
     public static final String PROPERTY_DELETED = "Propiedad con id %s eliminada correctamente";
