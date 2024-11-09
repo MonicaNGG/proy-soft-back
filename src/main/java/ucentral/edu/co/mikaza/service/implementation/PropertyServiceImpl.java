@@ -7,7 +7,10 @@ import ucentral.edu.co.mikaza.dto.property.GetPropertyDto;
 import ucentral.edu.co.mikaza.dto.property.UpdatePropertyDto;
 import ucentral.edu.co.mikaza.exception.PropertyException;
 import ucentral.edu.co.mikaza.mapper.PropertyMapper;
+import ucentral.edu.co.mikaza.model.Property;
+import ucentral.edu.co.mikaza.model.User;
 import ucentral.edu.co.mikaza.repository.PropertyRepository;
+import ucentral.edu.co.mikaza.repository.UserRepository;
 import ucentral.edu.co.mikaza.service.PropertyService;
 import ucentral.edu.co.mikaza.util.PropertyValidateUtil;
 
@@ -18,6 +21,7 @@ import java.util.List;
 @Service
 public class PropertyServiceImpl implements PropertyService {
     private final PropertyRepository propertyRepository;
+    private final UserRepository userRepository;
 
     @Override
     public List<GetPropertyDto> getAllProperties(
@@ -85,7 +89,18 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public GetPropertyDto saveProperty(CreatePropertyDto createPropertyDto) {
-        return PropertyMapper.modelToGetPropertyDto(propertyRepository.save(PropertyMapper.createPropertyDtoToModel(createPropertyDto)));
+
+        User user = userRepository.findById(createPropertyDto.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Property property = PropertyMapper.createPropertyDtoToModel(createPropertyDto);
+
+        property.setUser(user);
+
+        boolean isOwner = userRepository.existsById(user.getId());
+        property.setIsOwner(isOwner);
+
+        return PropertyMapper.modelToGetPropertyDto(propertyRepository.save(property));
     }
 
     @Override

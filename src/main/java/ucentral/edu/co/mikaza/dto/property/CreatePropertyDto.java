@@ -10,6 +10,10 @@ import java.util.Date;
 @Builder
 @Data
 public class CreatePropertyDto {
+
+    @NotNull(message = PropertyValidateUtil.USER_ID_NOT_NULL)
+    private Long userId;
+
     @NotBlank(message = PropertyValidateUtil.CITY_NOT_BLANK)
     @NotEmpty(message = PropertyValidateUtil.CITY_NOT_EMPTY)
     @NotNull(message = PropertyValidateUtil.CITY_NOT_NULL)
